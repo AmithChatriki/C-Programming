@@ -1,0 +1,67 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX 4
+void insert(char *,int *,int *);
+void delete(char *,int *,int *);
+void display(char *,int ,int );
+int main()
+{
+    char q[MAX];
+    int f=0,r=-1,cnt=0;
+    printf("1.Insert\n2.Delete\n3.Display\n4.Exit\n");
+    int ch;
+    for(;;)
+    {
+        printf("Enter the Choice = ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1 : insert(q,&r,&cnt); break;
+            case 2 : delete(q,&f,&cnt); break;
+            case 3 : display(q,f,cnt); break;
+            case 4 : exit(0);
+            default: printf("\nInvalid Choice!!");
+        }
+    }
+    return 0;
+}
+void insert(char *q,int *r,int *cnt)
+{
+    char ele;
+    if((*cnt)==MAX)
+    {
+        printf("CQ Overflow\n");
+        return;
+    }
+    (*r)=((*r+1))%MAX;
+    printf("Enter the element = ");
+    scanf("%s",&ele);
+    q[*r]=ele;
+    (*cnt)++;
+}
+void delete(char *q,int *f,int *cnt)
+{
+    if((*cnt)==0)
+    {
+        printf("CQ is Empty\n");
+        return;
+    }
+    printf("Element deleted from CQ is %c \n",q[*f]);
+    (*f)=((*f+1))%MAX;
+    (*cnt)--;
+}
+void display(char *q,int f,int cnt)
+{
+    int i,j;
+    if(cnt==0)
+    {
+        printf("CQ is empty\n");
+        return;
+    }
+    printf("CQ contents are = \n");
+    for(i=f,j=0;j<cnt;j++)
+    {
+        printf("%d : %c\n",i,q[i]);
+        i=((i+1)%MAX);
+    }
+}
