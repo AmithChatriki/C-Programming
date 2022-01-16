@@ -1,0 +1,93 @@
+# include <stdio.h>
+# include <stdlib.h>
+struct node
+{
+   int d;
+   struct node *link;
+};
+typedef struct node *nd;
+void i_r(nd );
+void d_r(nd );
+void display(nd );
+void  i_f (nd );
+void d_f( nd );
+int main( )
+{
+    struct node header = {.link = &header};
+    int ch;
+    for(;;)
+     {
+         printf("1.Rear Insert\n2.Rear Delete\n3.Front Insert\n4.Front Delete\n5.Display\n6.Exit\nEnter the Choice = ");
+         scanf("%d",&ch);
+         switch(ch)
+         {
+             case 1  : i_r(&header); break;
+             case 2 :  d_r(&header); break;
+             case 3  : i_f(&header); break;
+             case 4  : d_f(&header); break;
+             case 5  : display(&header); break;
+             default : return 0;
+         }
+     }
+     return 0;
+}
+void d_f(nd h)
+{
+   nd t;
+   if (h->link == h)
+   {
+       printf("SCLL is empty\n"); return;
+   }
+   t = h->link;
+   printf("Element Deleted = %d\n",t->d);
+   
+   h->link = t->link;
+   free(t);
+}
+void  i_f (nd h)
+{
+    nd t = (nd) malloc(sizeof(struct node));
+    scanf("%d",&(t->d));
+    t->link=0;
+    
+    t->link = h->link;
+    h->link = t;
+}
+void display(nd h)
+{
+    if (h->link == h)
+    {
+        printf("SCLL is empty\n"); return;
+    }
+    nd t;
+    for(t=h->link; t!=h ; t=t->link)
+      printf("%d\n",t->d);
+}
+void i_r(nd h)
+{
+    nd t;
+    if (h->link == h)
+    {
+        i_f(h); 
+        return;
+    }
+    t = (nd) malloc(sizeof(struct node));
+    scanf("%d",&(t->d));
+    t->link=0;
+    nd l;
+    for(l=h->link; l->link!=h ; l=l->link);
+    t->link = l->link;
+    l->link=t;
+}
+void d_r(nd h)
+{
+   if(h->link == h)
+   {
+       printf("SCLL is empty\n"); return;
+   }
+   nd t,p;
+   for(p=0,t=h;t->link!=h;p=t,t=t->link);
+   p->link=h;
+   printf("Element Deleted = %d\n",t->d);
+   free(t);
+}
