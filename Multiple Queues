@@ -1,0 +1,92 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MALLOC(p,s)\
+    if(!(p=malloc(s)))\
+    {\
+    printf("Insufficient Memory");\
+    exit (0);\
+    }
+#define MAX_QUEUES 10
+struct element
+{
+	int key;
+};
+typedef struct element ele;
+struct queue
+{
+    int data;
+    struct queue *link;
+};
+typedef struct queue *qp;
+qp front[MAX_QUEUES]={0},rear[MAX_QUEUES]={0};
+void insert(int ,ele );
+ele delete(int );
+void display(int );
+int main()
+{
+    int i;int ch;
+	ele item;
+	for(;;)
+	{
+		printf("1.Insert 2.Delete 3.Display 4.Exit\n");
+		printf("Enter the choice: ");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1 :printf("Enter the Queue number = ");
+			        scanf("%d",&i);
+			        printf("Enter the element to be inserted = ");
+			        scanf("%d",&item.key);
+				    insert(i,item);
+				    break;
+			case 2 :printf("Enter the Queue number = ");
+			        scanf("%d",&i);
+			  	    item=delete(i);
+				    printf("\nElement deleted = %d\n",item.key);
+				    break;
+			case 3 :printf("Enter the Queue number = ");
+			        scanf("%d",&i);
+				    display(i);
+				    break;
+			default:return 0;
+		}
+	}
+}
+void insert(int i,ele item)
+{
+    qp temp;
+    MALLOC(temp,sizeof(struct queue));
+    temp->data=item.key;
+    temp->link=NULL;
+    if(front[i])
+       rear[i]->link=temp;
+    else
+       front[i]=temp;
+    rear[i]=temp;
+}
+ele delete(int i)
+{
+    qp temp=front[i];
+    ele item={0};
+    if(!temp)
+    {
+        printf("Queue is Empty\n");
+        return item;
+    }
+    item.key=temp->data;
+    front[i]=temp->link;
+    free(temp);
+    return item;
+}
+void display(int i)
+{
+	qp temp=front[i];
+	if(!temp)
+	{
+		printf("Queue is Empty\n");
+		return;
+	}
+	printf("The contents of %d Queue are: \n",i+1);
+	for(;temp!=0;temp=temp->link)
+		printf("%d\n",temp->data);
+}
