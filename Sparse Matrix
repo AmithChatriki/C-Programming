@@ -1,0 +1,40 @@
+#include <stdio.h>
+struct sparse
+{
+    int row,col,value;
+};
+typedef struct sparse T;
+void transpose(T[],T[]);
+int main()
+{
+   T a[10],b[10]; 
+   int i;
+   printf("Enter number rows,columns and number of non-zero values = ");
+   scanf("%d%d%d",&a[0].row,&a[0].col,&a[0].value);
+   for(i=1;i<=a[0].value;i++)
+      scanf("%d%d%d",&(a[i].row),&(a[i].col),&(a[i].value));
+   transpose(a,b);
+   printf("Transposed sparse Matrix \n");
+   for(i=0;i<=b[0].value;i++)
+      printf("%d %d %d\n",(b[i].row),(b[i].col),(b[i].value));
+   return 0;
+}
+void transpose(T *a,T *b)
+{
+    int n,i,j,currentb;
+    n=a[0].value;
+    b[0]=a[0];
+    if(n>0)
+    {
+        currentb=1;
+        for(i=0;i<a[0].col;i++)
+           for(j=1;j<=n;j++)
+              if(a[j].col==i)
+              {
+                  b[currentb].row=a[j].col;
+                  b[currentb].col=a[j].row;
+                  b[currentb].value=a[j].value;
+                  currentb++;
+              }
+    }    
+}
