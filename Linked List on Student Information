@@ -1,0 +1,176 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct student
+{
+   char usn[20];
+   char name[20];
+   char branch[10];
+   int sem;
+   long int phno;
+};
+typedef struct student st;
+struct node
+{
+   st d;
+   struct node *link;
+};
+typedef struct node nd;
+nd *insertfront(nd *);
+nd *deletefront(nd *);
+nd *insertrear(nd *);
+nd *deleterear(nd *);
+nd *insertatpos(nd *);
+nd *deleteatpos(nd *);
+void display(nd *);
+int main()
+{
+   nd *first=0;
+   int ch;
+   for(;;)
+   {
+       printf("\n1.Insert Front\n2.Delete front\n3.Insert Rear\n4.Delete Rear\n5.Insert at Position\n6.Delete at Position\n7.display\n8.Exit\n");
+       printf("Enter the Choice = ");
+       scanf("%d",&ch);
+       switch(ch)
+       {
+          case 1  : first = insertfront(first); break;  
+          case 2  : first = deletefront(first); break;
+          case 3  : first = insertrear(first); break;
+          case 4  : first = deleterear(first); break;
+          case 5  : first = insertatpos(first); break;
+          case 6  : first = deleteatpos(first); break;
+          case 7  : display(first); break;
+          default : exit(0);
+       }
+   }    
+   return 0;
+}
+nd *insertfront(nd *f)
+{
+   nd *t;
+   t=(nd*)malloc(sizeof(nd));
+   printf("\nEnter USN,Name,Branch,Sem,Contact Number = ");
+   scanf("%s%s%s%d%ld",(t->d).usn,(t->d).name,(t->d).branch,&(t->d).sem,&(t->d).phno);
+   t->link=f;
+   return t;
+}
+nd *deletefront(nd *f)
+{
+   if(f==0)
+   {
+      printf("SLL is Empty\n");
+      return f;
+   }
+   nd *t=f;
+   printf("%s %s %s %d %ld",(t->d).usn,(t->d).name,(t->d).branch,(t->d).sem,(t->d).phno);  
+   f=t->link;
+   free(t);
+   return f;
+}
+nd *insertrear(nd *f)
+{
+   nd *t,*last;
+   t=(nd*)malloc(sizeof(nd));
+   printf("\nEnter USN,Name,Branch,Sem,Contact Number = ");
+   scanf("%s%s%s%d%ld",(t->d).usn,(t->d).name,(t->d).branch,&(t->d).sem,&(t->d).phno);
+   t->link=0;
+   if(f==0)
+     return t;
+   for(last=f;last->link!=0;last=last->link);
+   last->link=t;
+   return f;
+}
+nd *deleterear(nd *f)
+{
+   nd *t,*p;
+   if(f==0)
+   {
+      printf("SLL is Empty\n");
+      return f;
+   }
+   if(f->link==0)
+   {
+      printf("%s %s %s %d %ld",(f->d).usn,(f->d).name,(f->d).branch,(f->d).sem,(f->d).phno);
+      free(f);
+      return 0;
+   }
+   for(p=0,t=f;t->link!=0;p=t,t=t->link);
+   printf("%s %s %s %d %ld",(t->d).usn,(t->d).name,(t->d).branch,(t->d).sem,(t->d).phno);
+   p->link=0;
+   free(t);
+   return f;
+}
+nd *insertatpos(nd *f)
+{
+    int cnt,pos;
+    nd *t;
+    if(f==0)
+      cnt=0;
+    else
+      for(t=f;t!=0;t=t->link,cnt++);
+    printf("Enter the Position = ");
+    scanf("%d",&pos);
+    if(pos>cnt+1 || pos<1)
+    {
+        printf("Insertion not possible\n");
+        return f;
+    }
+    if(pos==1)
+    {
+        f=insertfront(f);
+        return f;
+    }
+    if(pos==cnt+1)
+    {
+        f=insertrear(f);
+        return f;
+    }
+    nd *p,*c;
+    pos--;
+    for(p=0,c=f;pos!=0;p=c,c=c->link,pos--);
+    p->link=insertfront(c);
+    return f;
+}
+nd *deleteatpos(nd *f)
+{
+    nd *t;
+    int pos,cnt;
+    if(f==0) 
+      cnt=0;
+    else
+      for(t=f;t!=0;t=t->link,cnt++);
+    printf("Enter the Position = ");
+    scanf("%d",&pos);
+    if(pos>cnt+1 || pos<1)
+    {
+        printf("Deletion not possible!\n");
+        return f;
+    }
+    if(pos==1)
+    {
+        f=deletefront(f);
+        return f;
+    }
+    if(pos==cnt+1)
+    {
+        f=deleterear(f);
+        return f;
+    }
+    nd *p,*c;
+    pos--;
+    for(p=0,c=f;pos!=0;p=c,c=c->link,pos--);
+    p->link=c->link;
+    free(c);
+    return f;
+}
+void display(nd *f)
+{
+   if(f==0)
+   {
+      printf("SLL is Empty\n");
+      return;
+   }
+   printf("Contents of list are = \n");
+   for(;f!=0;f=f->link)               
+      printf("%s %s %s %d %ld\n",(f->d).usn,(f->d).name,(f->d).branch,(f->d).sem,(f->d).phno); 
+}
