@@ -1,0 +1,98 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MALLOC(p,s)\
+        if(!(p=malloc(s)))\
+        {\
+          printf("Insufficient Memory\n");\
+          exit(0);\
+        }
+#define COMPARE(t,d) (((t) > (d)) ? 1 : (((t) == (d)) ? 0 : -1))
+struct polynode
+{
+    int coef;
+    int expo;
+    struct polynode *link;
+};
+typedef struct polynode *pp;
+void attach(float coefficient,int exponent,pp *ptr)
+{
+    pp temp;
+    MALLOC(temp,sizeof(struct polynode));
+    temp->coef=coefficient;
+    temp->expo=exponent;
+    (*ptr)->link=temp;
+    (*ptr)=temp;
+}
+pp padd(pp a,pp b)
+{
+    pp front,rear,temp;
+    int sum;
+    MALLOC(rear,sizeof(struct polynode));
+    front = rear;
+    while(a && b)
+        switch(COMPARE(a->expo,b->expo))
+        {
+            case -1 : attach(b->coef,b->expo,&rear);
+                      b=b->link;
+                      break;
+            case 0  : sum = a->coef + b->coef;
+                      if(sum)
+                         attach(sum,a->expo,&rear);
+                      a=a->link;
+                      b=b->link;
+                      break;    
+            case 1  : attach(a->coef,a->expo,&rear);
+                      a=a->link;
+                      break;          
+        }
+    for(;a;a=a->link) 
+       attach(a->coef,a->expo,&rear);
+    for(;b;b=b->link) 
+       attach(b->coef,b->expo,&rear);
+    rear->link=NULL;
+    temp=front;
+    front=front->link;
+    free(temp);
+    return front;
+}
+pp accept(pp a)
+{
+    pp t;
+    
+    if(a==0)
+    {
+        MALLOC(a,sizeof(struct polynode));
+        scanf("%d%d",&(a->coef),&(a->expo));
+        a->link=0;
+        return a;
+    }
+    else
+    {
+        MALLOC(t,sizeof(struct polynode));
+        scanf("%d%d",&(t->coef),&(t->expo));
+        t->link=a;
+        return t;
+    }
+}
+int main()
+{
+   pp a=0,b=0,c=0;
+   int ch;
+   for(;;)
+   {
+       printf("1.Add terms for Polynomial A\n2.Add terms for Polynomial B\n3.Result\n4.Exit\nEnter the choice = ");
+       scanf("%d",&ch);
+       switch(ch)
+       {
+            case 1 : a=accept(a);
+                     break;
+            case 2 : b=accept(b);     
+                     break;
+            case 3 : c=padd(a,b);
+                     for(;c!=0;c=c->link)
+                         printf("%dx^%d\n",c->coef,c->expo);
+            default: exit(0);         
+       }
+   }
+   return 0;
+}
