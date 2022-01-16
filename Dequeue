@@ -1,0 +1,81 @@
+ #include<stdio.h>
+ #define DQS 3
+ void rearinsert(int *a,int *r)
+ {
+     if((*r)==DQS-1)
+     {
+        printf("Dequeue Overflow\n");
+        return;
+     }
+     printf("Enter the element - Rear Insert = ");
+     ++(*r);
+     scanf("%d",a+(*r));
+ }
+ void reardelete(int *a,int *f,int *r)
+ {
+     if((*f)>(*r))
+     {
+         printf("Dequeue Underflow\n");
+         return;
+     }
+     printf("Information deleted from rear end is = %d\n",a[*r]);
+     (*r)--;
+ }
+ void frontdelete(int *a,int *f,int *r)
+ {
+     if((*f)>(*r))
+     {
+         printf("Dequeue Underflow\n");
+         return;
+     }
+     printf("Information deleted from front end is = %d\n",a[*f]);
+     (*f)++;
+ }
+ void frontinsert(int *a,int *f,int *r)
+ {
+     if(*f==0 && *r==-1)
+     {
+         printf("Enter element - Front Insert = ");
+         ++(*r);
+         scanf("%d",a+(*r));
+         return;
+     }
+     if(*f!=0)
+     {
+        printf("Enter element - Front Insert = ");
+        --(*f);
+        scanf("%d",a+(*f));
+        return;
+     }
+     printf("Front Insertion not possible\n");
+ }     
+ void display(int *a,int f,int r)
+ {
+     if(f>r)
+     {
+         printf("Dequeue Underflow\n");
+         return;
+     }
+     printf("Dequeue contents are = ");
+     for(;f<=r;f++)
+       printf("%d\n",a[f]);
+ }
+ int main()
+ {
+     int a[DQS],f=0,r=-1,ch;
+     for(;;)
+     {
+         printf("1.Read Insert\n2.Rear Delete\n3.Front Insert\n4.Front Delete\n5.Display\n6.Exit\nEnter the Choice = ");
+         scanf("%d",&ch);
+         switch(ch)
+         {
+             case 1 : rearinsert(a,&r); break;
+             case 2 : reardelete(a,&f,&r); break;
+             case 3 : frontinsert(a,&f,&r); break;
+             case 4 : frontdelete(a,&f,&r); break;
+             case 5 : display(a,f,r); break;
+             case 6 : return 0;
+         }
+     }
+     return 0;
+ }
