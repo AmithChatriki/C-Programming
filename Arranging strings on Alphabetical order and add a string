@@ -1,0 +1,57 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+char str[100][100];
+void getfromfile()
+{
+    FILE *fp;
+    int i,j;
+    fp = fopen("data.txt","r");
+    for(i=0;i<13;i++)
+       for(j=0;j<4;j++)
+           fscanf(fp,"%c",&str[i][j]);
+    fclose(fp);
+}
+
+int main()
+{
+   int i,j,n;
+   char s[100],d[100],a[100];
+   getfromfile();
+   for(i=0;i<13;i++)
+   {
+      for(j=i+1;j<13;j++)
+      {
+         if(strcmp(str[i],str[j])>0)
+         {
+            strcpy(s,str[i]);
+            strcpy(str[i],str[j]);
+            strcpy(str[j],s);
+         }
+      }
+   }
+   for(i=0;i<14;i++)
+      printf("%s\n",str[i]);
+    printf("Enter the element to be inserted = ");
+    scanf("%s",a);
+   //n++;
+   
+   strcpy(str[13],a);
+   strcpy(str[14],"\0");
+   
+   for(i=0;i<14;i++)
+   {
+      for(j=i+1;j<14;j++)
+      {
+         if(strcmp(str[i],str[j])>0)
+         {
+            strcpy(d,str[i]);
+            strcpy(str[i],str[j]);
+            strcpy(str[j],d);
+         }
+      }
+   }
+   printf("\nThe sorted order of names are :\n");
+   for(i=0;i<14;i++)
+      printf("%s\n",str[i]);
+}
