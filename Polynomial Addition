@@ -1,0 +1,69 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct term{
+    int cf;
+    int px;
+};
+typedef struct term tr;
+void accept(int ,tr *);
+void display(int ,const tr *);
+void add(int ,int ,int *,tr *,tr *,tr *);
+int main()
+{
+    int n1,n2,n3;
+    tr *p1=0,*p2=0,*p3=0;
+    scanf("%d",&n1);
+    p1=(tr*)malloc(sizeof(tr)*n1);
+    scanf("%d",&n2);
+    p2=(tr*)malloc(sizeof(tr)*n2);
+    accept(n1,p1);
+    accept(n2,p2);
+    n3=n1+n2;
+    p3=(tr*)malloc(sizeof(tr)*n3);
+    add(n1,n2,&n3,p1,p2,p3);
+    printf("The polynomial is = ");
+    display(n3,p3);
+    free(p1);free(p2);free(p3);
+    return 0; 
+}
+void accept(int n,tr *a)
+{
+    int i;
+    for(i=0;i<n;i++)
+        scanf("%d%d",&(a[i].cf),&(a[i].px));
+}
+void display(int n,const tr *a)
+{
+    int i;
+    for(i=0;i<n;i++)
+        printf("%dx^%d\n",a[i].cf,a[i].px);
+}
+void add(int n1,int n2,int *n3,tr *p1,tr *p2,tr *p3)
+{
+    int i,j,k=0,flag=0;
+    for(i=0;i<n1;i++)
+    {
+        for(j=0,flag=0;j<n2;j++)
+            if(p1[i].px==p2[j].px)
+            {
+                p3[k].cf=p1[i].cf+p2[j].cf;
+                p3[k].px=p1[k].px;
+                k++;
+                p2[i].px=-999;
+                flag=1;
+                break;
+            }
+            if(flag==0)
+            {
+                p3[k]=p1[i];
+                k++;
+            }
+    }
+    for(i=0;i<n2;i++)
+        if(p2[i].px!=-999)
+        {
+            p3[k]=p2[i];
+            k++;
+        }
+    (*n3)=k;    
+}
