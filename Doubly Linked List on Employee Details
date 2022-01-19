@@ -1,0 +1,130 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MALLOC(p,s)\
+        if(!(p=malloc(s)))\
+        {\
+          printf("Insufficient Memory\n");\
+          exit(0);\
+        }
+struct dll
+{
+    struct dll *llink;
+    char ssn[20];
+    char name[30];
+    char dept[20];
+    char designation[20];
+    float sal;
+    long int phno;
+    struct dll *rlink;
+};
+typedef struct dll *dp;
+dp insertfront(dp f)
+{
+    dp t;
+    MALLOC(t,sizeof(struct dll));
+    printf("Enter SSN,Name,Department,Designation,Salary,Contact Number = \n");
+    scanf("%s%s%s%s%f%ld",(t->ssn),(t->name),(t->dept),(t->designation),&(t->sal),&(t->phno));
+    if(f==0)
+    {
+        t->rlink=0;
+        t->llink=0;
+        return t;
+    }
+    t->llink=0;
+    t->rlink=f;
+    return t;
+}
+dp deletefront(dp f)
+{
+    if(f==0)
+    {
+        printf("DLL is Empty\n");
+        return f;
+    }
+    if(f->rlink==0)
+    {
+        printf("Deleted Employee = \n");
+    printf("%s %s %s %s %.2f %ld\n",(f->ssn),(f->name),(f->dept),(f->designation),(f->sal),(f->phno));
+        free(f);
+        return 0;
+    }
+    dp t;
+    MALLOC(t,sizeof(struct dll));
+    t=f->rlink;
+    printf("Deleted Employee = \n");
+    printf("%s %s %s %s %.2f %ld\n",(f->ssn),(f->name),(f->dept),(f->designation),(f->sal),(f->phno));
+    free(f);
+    return t;
+}
+dp insertrear(dp f)
+{
+    dp t;
+    MALLOC(t,sizeof(struct dll));
+    printf("Enter SSN,Name,Department,Designation,Salary,Contact Number = \n");
+    scanf("%s%s%s%s%f%ld",(t->ssn),(t->name),(t->dept),(t->designation),&(t->sal),&(t->phno));
+    t->rlink=0;
+    if(f==0)
+    {
+        t->llink=0;
+        return t;
+    }
+    dp last;
+    MALLOC(last,sizeof(struct dll));
+    for(last=f;last->rlink!=0;last=last->rlink);
+    last->rlink=t;
+    return f;    
+}
+dp deleterear(dp f)
+{
+    dp p,t;
+    if(f==0)
+    {
+        printf("DLL is Empty\n");
+        return f;
+    }
+    if(f->rlink==0)
+    {
+        printf("Deleted Employee is = \n");
+    printf("%s %s %s %s %.2f %ld\n",(f->ssn),(f->name),(f->dept),(f->designation),(f->sal),(f->phno));
+        free(f);
+        return 0;
+    }
+    for(p=0,t=f;t->rlink!=0;p=t,t=t->rlink);
+    p->rlink=0;
+    printf("Deleted Employee is = \n");
+    printf("%s %s %s %s %.2f %ld\n",(t->ssn),(t->name),(t->dept),(t->designation),(t->sal),(t->phno));
+    free(t);
+    return f;
+}
+void display(dp f)
+{
+    if(f==0)
+    {
+        printf("DLL is Empty\n");
+        return;
+    }
+    printf("Contents of DLL are = \n");
+    for(;f!=0;f=f->rlink)
+      printf("%s %s %s %s %.2f %ld\n",(f->ssn),(f->name),(f->dept),(f->designation),(f->sal),(f->phno));
+    
+}
+int main()
+{
+    dp first=0;
+    int ch;
+    for(;;)
+    {
+        printf("1.Insert Front\n2.Delete Front\n3.Insert Rear\n4.Delete Rear\n5.Display\n6.Exit\nEnter the Choice = ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1  : first = insertfront(first); break;
+            case 2  : first = deletefront(first); break;
+            case 3  : first = insertrear(first); break; 
+            case 4  : first = deleterear(first); break;
+            case 5  : display(first); break;
+            default : exit(0);
+        }
+    }
+    return 0;
+}
