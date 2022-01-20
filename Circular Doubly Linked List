@@ -1,0 +1,166 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MALLOC(p,s)\
+        if(!(p=malloc(s)))\
+        {\
+          printf("Insufficient Memory\n");\
+          exit(0);\
+        }
+struct cdll
+{
+    struct cdll *llink;
+    int data;
+    struct cdll *rlink;
+};
+typedef struct cdll *dp;
+void insertfront(dp h)
+{
+    dp t;
+    MALLOC(t,sizeof(struct cdll));
+    printf("Enter the element = ");
+    scanf("%d",&(t->data));
+    t->rlink=h->rlink;
+    h->rlink=t;
+    h->llink=0;
+}
+void deletefront(dp h)
+{
+    dp t;
+    if (h->rlink == h)
+    {
+       printf("SCLL is empty\n"); 
+       return;
+    }
+    t = h->rlink;
+    printf("Element Deleted = %d\n",t->data);
+    h->rlink = t->rlink;
+    free(t);
+}
+void insertrear(dp h)
+{
+    dp t;
+    if (h->rlink == h)
+    {
+        insertfront(h); 
+        return;
+    }
+    MALLOC(t,sizeof(struct cdll));
+    printf("Enter the Element = ");
+    scanf("%d",&(t->data));
+    dp l;
+    for(l=h->rlink;l->rlink!=h;l=l->rlink);
+    t->rlink = l->rlink;
+    l->rlink=t;
+}
+void deleterear(dp h)
+{
+    if(h->rlink == h)
+    {
+       printf("SCLL is empty\n"); 
+       return;
+    }
+    dp t,p;
+    for(p=0,t=h;t->rlink!=h;p=t,t=t->rlink);
+    p->rlink=h;
+    printf("Element Deleted = %d\n",t->data);
+    free(t);
+}
+void display(dp h)
+{
+    dp t;
+    MALLOC(t,sizeof(struct cdll));
+    if(h->rlink == h)
+    {
+        printf("CDLL is Empty\n");
+        return;
+    }
+    printf("Contents of CDLL are = \n");
+    for(t=h->rlink;t!=h;t=t->rlink)
+      printf("%d\n",t->data);
+}
+void insertatpos(dp h)
+{
+    int cnt=0,pos;
+    dp t;
+    if(h->rlink == h) 
+      cnt=0;
+    else
+      for(t=h;t->rlink!=h;t=t->rlink,cnt++);
+    printf("Count = %d\n",cnt);
+    printf("Enter the Position = ");
+    scanf("%d",&pos);
+    if(pos>cnt+1 || pos<1)
+    {
+        printf("Insertion not possible!\n");
+        return;
+    }
+    if(pos==1)
+    {
+        insertfront(h);
+        return;
+    }
+    if(pos==cnt+1)
+    {
+        insertrear(h);
+        return;
+    }
+    dp p,c;
+    pos--;
+    for(p=0,c=h;pos!=0;p=c,c=c->rlink,pos--);
+    insertfront(c);
+}
+void deleteatpos(dp h)
+{
+    dp t;
+    int pos,cnt=0;
+    if(h->rlink == h) 
+      cnt=0;
+    else
+      for(t=h;t->rlink!=h;t=t->rlink,cnt++);
+    printf("Count = %d\n",cnt);
+    printf("Enter the Position = ");
+    scanf("%d",&pos);
+    if(pos>cnt+1 || pos<1)
+    {
+        printf("Deletion not possible!\n");
+        return;
+    }
+    if(pos==1)
+    {
+        deletefront(h);
+        return;
+    }
+    if(pos==cnt)
+    {
+        deleterear(h);
+        return;
+    }
+    dp p,c;
+    pos;
+    for(p=0,c=h;pos!=0;p=c,c=c->rlink,pos--);
+    p->rlink=c->rlink;
+    printf("Element Deleted = %d\n",c->data);
+    free(c);
+}
+int main()
+{
+    struct cdll header = {.rlink = &header};
+    int ch;
+    for(;;)
+    {
+        printf("1.Insert Front\n2.Delete Front\n3.Insert Rear\n4.Delete Rear\n5.Insert at Position\n6.Delete at Position\n7.Display\n8.Exit\nEnter the Choice = ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1  : insertfront(&header); break;
+            case 2  : deletefront(&header); break;
+            case 3  : insertrear(&header); break; 
+            case 4  : deleterear(&header); break;
+            case 5  : insertatpos(&header); break;
+            case 6  : deleteatpos(&header); break;
+            case 7  : display(&header); break;
+            default : exit(0);
+        }
+    }
+    return 0;
+}
