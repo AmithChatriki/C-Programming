@@ -1,0 +1,116 @@
+#include <stdio.h>
+#include<stdlib.h>
+#define MALLOC(p,s)\
+        if(!(p=malloc(s)))\
+        {\
+          printf("Insufficient Memory\n");\
+          exit(0);\
+        }
+struct node
+{
+    struct node *llink;
+    int d;
+    struct node *rlink;
+};
+typedef struct node dll;
+struct ht
+{
+    dll *head,*tail;
+}; 
+typedef struct ht ptrs;
+void insertfront(ptrs *);
+void deletefront(ptrs *);
+void insertrear(ptrs *p);
+void deleterear(ptrs *p);
+void display(ptrs *);
+int main()
+{
+    ptrs *p;
+    MALLOC(p->head,sizeof(struct node));
+    MALLOC(p->tail,sizeof(struct node));
+    p->head->llink=0;
+    p->tail->rlink=0;
+    int ch;
+    while(1)
+    {
+        printf("1.Insert Front\n2.Delete Front\n3.Insert Rear\n4.Delete Rear\n5.Display\n6.Exit\n");
+        printf("Enter the choice = ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1: insertfront(p); break;
+            case 2: deletefront(p); break;
+            case 3: insertrear(p); break;
+            case 4: deleterear(p); break;
+            case 5: display(p); break;
+            case 6: exit(0);
+        }
+    }
+    return 0;
+}
+void insertfront(ptrs *p)
+{
+    dll *t;
+    MALLOC(t,sizeof(struct node));
+    printf("Enter Data = ");
+    scanf("%d",&(t->d));
+    if(p->head==0)
+    {
+       t->rlink=p->tail;
+       p->head->rlink=t;
+    }
+    t->rlink=p->head->rlink;
+    p->head->rlink=t;   
+}
+void deletefront(ptrs *p)
+{
+    dll *t;
+    if(p->head->rlink==0)
+    {
+        printf("DLL is Empty\n");
+        return;
+    }
+    t=p->head->rlink;
+    printf("Element Deleted is = %d\n",t->d);
+    p->head->rlink=t->rlink;
+}
+void insertrear(ptrs *p)
+{
+    if(p->head->rlink==0)
+    {
+        insertfront(p);
+        return;
+    }
+    dll *t,*l;
+    MALLOC(t,sizeof(struct node));
+    printf("Enter Data = ");
+    scanf("%d",&(t->d));
+    for(l=p->head->rlink;l->rlink!=0;l=l->rlink);
+    t->rlink = l->rlink;
+    l->rlink=t;
+}
+void deleterear(ptrs *p)
+{
+    if(p->head->rlink==0)
+    {
+        printf("DLL is Empty\n");
+        return;
+    }
+    dll *t,*a;
+    for(a=0,t=p->head;t->rlink!=0;a=t,t=t->rlink);
+    a->rlink=0;
+    printf("Element Deleted = %d\n",t->d);
+    free(t);
+}
+void display(ptrs *p)
+{
+    if(p->head->rlink==0)
+    {
+        printf("DLL is Empty\n");
+        return;
+    }
+    dll *a=0;
+    printf("Contents of DLL are = \n");
+    for(a=p->head->rlink;a!=0;a=a->rlink)
+      printf("%d\n",a->d);
+}
