@@ -21,7 +21,7 @@ int main()
     int top=-1,i;
     printf("Enter a valid postfix expression = \n");
     scanf("%s",postfix);
-    for(i=0;postfix[i]!='\0;i++)
+    for(i=0;postfix[i]!='\0';i++)
     {
        if(isdigit(postfix[i]))
            st[++top] = postfix[i] - '0';
