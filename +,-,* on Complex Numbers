@@ -1,0 +1,53 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MALLOC(p,s)\
+        if(!(p=malloc(s)))\
+        {\
+          printf("Insufficient Memory\n");\
+          exit(0);\
+        }
+struct complexno
+{
+   float real;
+   float imag;
+};
+typedef struct complexno *cn;
+cn accept()
+{
+   cn a;
+   MALLOC(a,sizeof(struct complexno));
+   printf("Enter the Real part and Imaginary part = ");
+   scanf("%f%f",&(a->real),&(a->imag));
+   return a;
+}
+cn compute(cn n1,cn n2,char op)
+{
+   cn res;
+   switch(op)
+   {
+      case '+' : res->real = (n1->real)+(n2->real);
+                 res->imag = (n1->imag)+(n2->imag);
+                 break;
+      case '-' : res->real = (n1->real)-(n2->real);
+                 res->imag = (n1->imag)-(n2->imag);
+                 break;
+      case '*' : res->real = (n1->real)*(n2->real) - (n1->imag)*(n2->imag);
+                 res->imag = (n1->real)*(n2->imag) + (n1->imag)*(n2->real);
+                 break;
+      default  : printf("Invalid Operator!!!\n");
+                 exit(0);               
+   }
+   return res;
+}
+int main()
+{
+   cn n1,n2,res;
+   char op;
+   n1 = accept();
+   n2 = accept();
+   printf("Enter the Operator = ");
+   scanf(" %c",&op);
+   res = compute(n1,n2,op);
+   printf("The Resultant Complex Number = %.2f + i%.2f\n",res->real,res->imag);
+   return 0;
+}
