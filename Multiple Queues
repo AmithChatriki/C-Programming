@@ -1,0 +1,80 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MALLOC(p,s)\
+    if(!(p=malloc(s)))\
+    {\
+    printf("Insufficient Memory");\
+    exit (0);\
+    }
+#define MAXQUEUES 3
+#define MAXELE 9
+void insert(int *,int *,int *,int );
+void delete(int *,int *,int *,int *,int );
+void display(int *,int *,int *,int );
+int main()
+{	
+     int q[MAXELE],front[MAXQUEUES+1],rear[MAXQUEUES+1],boun[MAXQUEUES+1];
+     int i,ch,item;
+     for(i=0;i<=MAXQUEUES;i++)
+     {
+        front[i]=(MAXELE/MAXQUEUES*i);
+        rear[i]=(MAXELE/MAXQUEUES*i)-1;
+        boun[i]=rear[i];
+     }
+     for(;;)
+     {	
+           printf("1.Insert\n2.Delete\n3.Display\n4.Exit\n");	
+           printf("Enter the choice: ");		
+           scanf("%d",&ch);		
+           switch(ch)		
+           {			
+               case 1 :printf("Enter the QUEUE number = ");
+                       scanf("%d",&i);	        
+                       insert(q,rear,boun,i);
+                       break;	
+               case 2 :printf("Enter the QUEUE number = ");
+                       scanf("%d",&i);  
+                       delete(q,front,rear,boun,i);           
+                       	  
+                       break;
+               case 3 :printf("Enter the QUEUE number = ");
+                       scanf("%d",&i);
+                       display(q,rear,boun,i);
+                       break;
+               default:return 0;
+           }
+     }
+}
+void insert(int *q,int *rear,int *boun,int i)
+{
+    int item;
+    if(rear[i]==boun[i+1])
+    {
+        printf("Queue %d Overflow \n",i);
+        return;
+    }
+    printf("Enter the element to be inserted = ");  
+    scanf("%d",&item);
+    q[++rear[i]]=item;
+}
+void delete(int *q,int *front,int *rear,int *boun,int i)
+{
+    if(rear[i]==boun[i])
+    {
+        printf("Queue %d Underflow \n",i);
+        return;
+    }
+    printf("Element deleted is %d\n",q[front[i]]);
+    front[i]++;
+}
+void display(int *q,int *rear,int *boun,int i)
+{
+    if(rear[i]==boun[i])
+    {
+        printf("Queue %d is Empty\n",i);
+        return;
+    }
+    printf("Elements of queue are = \n");
+    for(int j=boun[i]+1;j<=rear[i];j++)
+        printf("%d\n",q[j]);
+}
