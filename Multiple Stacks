@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MALLOC(p,s)\
+    if(!(p=malloc(s)))\
+    {\
+    printf("Insufficient Memory");\
+    exit (0);\
+    }
+#define MAXSTACKS 3
+#define MAXELE 9
+void push(int *,int *,int *,int );
+void pop(int *,int *,int *,int );
+void display(int *,int *,int *,int );
+int main()
+{	
+     int s[MAXELE],top[MAXSTACKS+1],boun[MAXSTACKS+1];
+     int i,ch,item;
+     for(i=0;i<=MAXSTACKS;i++)
+     {
+        top[i]=(MAXELE/MAXSTACKS*i)-1;
+        boun[i]=top[i];
+     }
+     for(;;)
+     {	
+           printf("1.Push\n2.Pop\n3.Display\n4.Exit\n");	
+           printf("Enter the choice: ");		
+           scanf("%d",&ch);		
+           switch(ch)		
+           {			
+               case 1 :printf("Enter the stack number = ");
+                       scanf("%d",&i);	        
+                       push(s,top,boun,i);
+                       break;	
+               case 2 :printf("Enter the stack number = ");
+                       scanf("%d",&i);                   
+                       pop(s,top,boun,i);	                  	  
+                       break;
+               case 3 :printf("Enter the stack number = ");
+                       scanf("%d",&i);
+                       display(s,top,boun,i);
+                       break;
+               default:return 0;
+           }
+     }
+}
+void push(int *s,int *top,int *boun,int i)
+{
+    int item;
+    if(top[i]==boun[i+1])
+    {
+        printf("Stack %d Overflow \n",i);
+        return;
+    }
+    printf("Enter the element to be inserted = ");  
+    scanf("%d",&item);
+    top[i]++;
+    s[top[i]]=item;
+}
+void pop(int *s,int *top,int *boun,int i)
+{
+    if(top[i]==boun[i])
+    {
+        printf("Stack %d Underflow \n",i);
+        return;
+    }
+    printf("Element popped is %d\n",s[top[i]]);
+    top[i]--;
+}
+void display(int *s,int *top,int *boun,int i)
+{
+    if(top[i]==boun[i])
+    {
+        printf("Stack %d is Empty\n",i);
+        return;
+    }
+    printf("Elements of stack are = \n");
+    for(int j=top[i];j>=boun[i]+1;j--)
+        printf("%d\n",s[j]);
+}
