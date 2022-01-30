@@ -10,7 +10,7 @@
 #define MAXELE 9
 void insert(int *,int *,int *,int );
 void delete(int *,int *,int *,int *,int );
-void display(int *,int *,int *,int );
+void display(int *,int *,int *,int *,int );
 int main()
 {	
      int q[MAXELE],front[MAXQUEUES+1],rear[MAXQUEUES+1],boun[MAXQUEUES+1];
@@ -39,7 +39,7 @@ int main()
                        break;
                case 3 :printf("Enter the QUEUE number = ");
                        scanf("%d",&i);
-                       display(q,rear,boun,i);
+                       display(q,front,rear,boun,i);
                        break;
                default:return 0;
            }
@@ -67,7 +67,7 @@ void delete(int *q,int *front,int *rear,int *boun,int i)
     printf("Element deleted is %d\n",q[front[i]]);
     front[i]++;
 }
-void display(int *q,int *rear,int *boun,int i)
+void display(int *q,int *front,int *rear,int *boun,int i)
 {
     if(rear[i]==boun[i])
     {
@@ -75,6 +75,6 @@ void display(int *q,int *rear,int *boun,int i)
         return;
     }
     printf("Elements of queue are = \n");
-    for(int j=boun[i]+1;j<=rear[i];j++)
+    for(int j=front[i];j<=rear[i];j++)
         printf("%d\n",q[j]);
 }
