@@ -1,0 +1,69 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MALLOC(p,s)\
+        if(!(p=malloc(s))) {\
+          printf("Isufficient Memory\n");\
+          exit(0);\
+        }
+void push(int *s,int *top,int *MAX)
+{
+    int ele;
+    if((*top)<(*MAX)-1)
+    {
+       printf("Enter the value = ");
+       scanf("%d",&ele);
+       (s)[++(*top)]=ele;
+    }
+    else
+    {
+       printf("Stack size is being Incremented\n");
+       (*MAX)=(*MAX)*2;
+       s=(int*)realloc(s,sizeof(int)*(*MAX));
+       printf("Enter the value = ");
+       scanf("%d",&ele);
+       (s)[++(*top)]=ele;
+    }
+}
+void pop(int *s,int *top)
+{
+    if((*top)==-1)
+    {
+        printf("Stack is Empty\n");
+        return;
+    }
+    printf("Deleted Element = %d\n",s[(*top)]);
+    (*top)--;
+}
+void display(int *s,int top)
+{
+    if(top==-1)
+    {
+        printf("Stack is Empty\n");
+        return;
+    }
+    int i;
+    printf("Contents of Stack are = \n");
+    for(i=top;i>=0;i--)
+       printf("%d\n",(s)[i]);
+}
+int main()
+{
+    int *s;
+    int MAX=3;
+    int top=-1,ch;
+    MALLOC((s),sizeof(int)*MAX);
+    for(;;)
+    {
+        printf("1:Push\n2:Pop\n3:Display\n4.Exit\n");
+        printf("Enter choice: ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+             case 1 : push(s,&top,&MAX); break;
+             case 2 : pop(s,&top); break;
+             case 3 : display(s,top); break;
+             default: exit(0);
+        }     
+    }
+    return 0;
+}
