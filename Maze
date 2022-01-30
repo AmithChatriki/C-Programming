@@ -1,0 +1,85 @@
+# include <stdio.h>
+# define SZ 80
+struct mv
+{
+short int vert;
+short int horiz;
+};
+typedef struct mv offsets;
+offsets move[8] = {{-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1}};
+int maze[20][20] = { {1,1,1,1,1},
+                     {1,0,0,1,1},
+                     {1,1,1,0,1},
+                     {1,1,1,0,1},
+                     {1,1,1,1,1} 
+                   };
+# define EXIT_ROW 3
+# define EXIT_COL 3
+int mark[SZ][SZ]={0};
+struct ele
+{
+    int row,col,dir;
+};
+typedef struct ele element;
+element stack[SZ];
+int top;
+#define FALSE 0
+#define TRUE 1
+element pop()
+{
+   if(top>-1) 
+      return stack[top--]; 
+}
+void push(element e)
+{
+   stack[++top] = e; 
+}
+void path(void)
+{
+   int i,row,col,nextRow,nextCol,dir,found=FALSE;
+   element position;
+   mark[1][1] = 1; //entrance position is set to 1
+   top = 0;
+   stack[0].row = 1;
+   stack[0].col = 1; // initial row and col values are on stack
+   stack[0].dir = 0;
+   while ( top>-1 && !found)
+   {
+       position = pop();
+       row = position.row;
+       col = position.col;
+       dir = position.dir;
+       while(dir<8 && !found)
+       {
+           nextRow = row + move[dir].vert;
+           nextCol = col + move[dir].horiz;
+           if (nextRow == EXIT_ROW && nextCol == EXIT_COL && maze[nextRow][nextCol]!=1)
+                found=TRUE;
+           else if ( !maze[nextRow][nextCol] && !mark[nextRow][nextCol] )
+             {
+                 mark[nextRow][nextCol] = 1;
+                 position.row = row; position.col = col;
+                 position.dir = ++dir;
+                 push(position);
+                 row = nextRow; col = nextCol; dir = 0;
+             }
+          else
+             ++dir;
+        }// end of inner while loop
+    }
+    if (found)
+    {
+         printf("The path is:\n");
+         printf("row col\n");
+         for(i=0;i<=top;i++)
+         printf("%2d%5d\n", stack[i].row,stack[i].col);
+         printf("%2d%5d\n", row, col);
+         printf("%2d%5d\n",EXIT_ROW,EXIT_COL);
+    }
+    else
+        printf("The maze does not have a path\n");
+}
+int main()
+{
+   path();
+}
