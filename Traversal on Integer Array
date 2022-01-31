@@ -11,10 +11,16 @@ void accept(int *p,int *n)
 }
 void display(int *p,int n)
 {
+     if(n==0)
+     {
+        printf("Array is Empty\n");
+        return;
+     }
      int i;
      printf("Contents of array are = \n");
      for(i=0;i<n;i++)
        printf("%d ",p[i]);
+      printf("\n");
 }
 void insert(int *p,int *n)
 {
