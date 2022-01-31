@@ -25,16 +25,16 @@ void display(int *p,int n)
 void insert(int *p,int *n)
 {
      int pos,ele,i;
-     printf("\nEnter the position = ");
+     printf("Enter the position = ");
      scanf("%d",&pos);
 
      if (pos <= 0 || pos > (*n)+1)  // valid range for pos is 1 to n+1
      { 
-        printf("\nInvalid position\n"); 
+        printf("Invalid position\n"); 
         return; 
      }
 
-     printf("\nEnter the value = ");
+     printf("Enter the value = ");
      scanf("%d",&ele);
      for(i=(*n)-1;i>=(pos-1);i--)
         p[i+1]=p[i];
@@ -44,13 +44,18 @@ void insert(int *p,int *n)
 
 void delete(int *p,int *n)
 {
+     if((*n)==0)
+     {
+        printf("Array is Empty\n");
+        return;
+     }
      int pos,i;
      printf("Enter the position = ");
      scanf("%d",&pos);
 
      if (pos <= 0 || pos > (*n))
      { 
-        printf("\nInvalid position\n"); 
+        printf("Invalid position\n"); 
         return; 
      }
 
@@ -64,7 +69,7 @@ int main()
 
     for(;;)  //infinite loop
     {
-     printf("1. Enter the value for array\n");
+     printf("1. Enter the Array\n");
      printf("2. Display\n");
      printf("3. Insert at pos\n");
      printf("4. Delete at pos\n");
