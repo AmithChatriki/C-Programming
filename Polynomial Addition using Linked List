@@ -78,21 +78,19 @@ int main()
 {
    pp a=0,b=0,c=0;
    int ch;
-   for(;;)
-   {
-       printf("1.Add terms for Polynomial A\n2.Add terms for Polynomial B\n3.Result\n4.Exit\nEnter the choice = ");
-       scanf("%d",&ch);
-       switch(ch)
-       {
-            case 1 : a=accept(a);
-                     break;
-            case 2 : b=accept(b);     
-                     break;
-            case 3 : c=padd(a,b);
-                     for(;c!=0;c=c->link)
-                         printf("%dx^%d\n",c->coef,c->expo);
-            default: exit(0);         
-       }
-   }
+   int n1,n2,i;
+   printf("Enter the number of terms for Polynomial A = ");
+   scanf("%d",&n1);
+   for(i=0;i<n1;i++)
+      a=accept(a);
+   printf("Enter the number of terms for Polynomial B = ");
+   scanf("%d",&n2);
+   for(i=0;i<n2;i++)
+      b=accept(b);
+   c=padd(a,b);
+   printf("Resultant Polynomial = ");
+   for(;c!=0;c=c->link)
+       printf("%dx^%d + ",c->coef,c->expo);
+   printf("\n");
    return 0;
 }
