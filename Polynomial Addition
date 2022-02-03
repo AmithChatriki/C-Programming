@@ -12,11 +12,15 @@ int main()
 {
     int n1,n2,n3;
     tr *p1=0,*p2=0,*p3=0;
+    printf("Enter the number of terms for polynomial A = ");
     scanf("%d",&n1);
     p1=(tr*)malloc(sizeof(tr)*n1);
+    printf("Enter the terms for polynomial A = \n");
+    accept(n1,p1);
+    printf("Enter the number of terms for polynomial B = ");
     scanf("%d",&n2);
     p2=(tr*)malloc(sizeof(tr)*n2);
-    accept(n1,p1);
+    printf("Enter the terms for polynomial B = \n");
     accept(n2,p2);
     n3=n1+n2;
     p3=(tr*)malloc(sizeof(tr)*n3);
