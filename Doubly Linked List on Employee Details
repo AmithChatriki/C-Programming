@@ -103,6 +103,10 @@ void display(dp f)
         printf("DLL is Empty\n");
         return;
     }
+    int cnt=0;
+    dp t;
+    for(t=f;t!=0;t=t->rlink,cnt++);
+    printf("Count = %d\n",cnt);
     printf("Contents of DLL are = \n");
     for(;f!=0;f=f->rlink)
       printf("%s %s %s %s %.2f %ld\n",(f->ssn),(f->name),(f->dept),(f->designation),(f->sal),(f->phno));
