@@ -6,12 +6,12 @@ struct node
    struct node *link;
 };
 typedef struct node *nd;
-void i_r(nd );
-void d_r(nd );
+void insertrear(nd );
+void deleterear(nd );
 void insertatpos(nd );
 void deleteatpos(nd );
-void i_f (nd );
-void d_f( nd );
+void insertfront(nd );
+void deletefront( nd );
 void display(nd );
 int main( )
 {
@@ -23,10 +23,10 @@ int main( )
          scanf("%d",&ch);
          switch(ch)
          {
-             case 1  : i_r(&header); break;
-             case 2  : d_r(&header); break;
-             case 3  : i_f(&header); break;
-             case 4  : d_f(&header); break;
+             case 1  : insertrear(&header); break;
+             case 2  : deleterear(&header); break;
+             case 3  : insertfront(&header); break;
+             case 4  : deletefront(&header); break;
              case 5  : insertatpos(&header); break;
              case 6  : deleteatpos(&header); break;
              case 7  : display(&header); break;
@@ -35,7 +35,7 @@ int main( )
      }
      return 0;
 }
-void d_f(nd h)
+void deletefront(nd h)
 {
    nd t;
    if (h->link == h)
@@ -47,7 +47,7 @@ void d_f(nd h)
    h->link = t->link;
    free(t);
 }
-void  i_f (nd h)
+void insertfront(nd h)
 {
     nd t =  (nd)malloc(sizeof(struct node));
     scanf("%d",&(t->d));
@@ -119,7 +119,7 @@ void deleteatpos(nd h)
     printf("Element Deleted = %d\n",c->d);
     free(c);
 }
-void i_r(nd h)
+void insertrear(nd h)
 {
     nd t;
     if (h->link == h)
@@ -134,7 +134,7 @@ void i_r(nd h)
     t->link = l->link;
     l->link=t;
 }
-void d_r(nd h)
+void deleterear(nd h)
 {
    if(h->link == h)
    {
