@@ -12,7 +12,7 @@ int main()
     int s[MAX_ELE];
     for(;;)
     {
-        printf("1:push\n2:pop\n3:display\n4:Palindrome\n5.Exit\n");
+        printf("1:Push\n2:Pop\n3:Display\n4:Palindrome\n5.Exit\n");
         printf("Enter choice: ");
         scanf("%d",&ch);
         switch(ch)
