@@ -1,67 +1,70 @@
 #include<stdio.h>
 #include<stdlib.h>
-#define MALLOC(p,s)\
-        if(!(p=malloc(s))) {\
-          printf("Isufficient Memory\n");\
+#define MALLOC(p,q)\
+        if(!(p=malloc(q))) {\
+          printf("Insufficient Memory\n");\
           exit(0);\
         }
-void push(int *s,int *top,int *MAX)
+void insert(int *q,int *rear,int *MAX,int *cnt)
 {
     int ele;
-    if((*top)<(*MAX)-1)
+    if((*rear)<(*MAX)-1)
     {
        printf("Enter the value = ");
        scanf("%d",&ele);
-       (s)[++(*top)]=ele;
+       q[++(*rear)]=ele;
+       (*cnt)++;
     }
     else
     {
-       printf("Stack size is being Incremented\n");
+       printf("Queue size is being Incremented\n");
        (*MAX)=(*MAX)*2;
-       s=(int*)realloc(s,sizeof(int)*(*MAX));
+       q=(int*)realloc(q,sizeof(int)*(*MAX));
        printf("Enter the value = ");
        scanf("%d",&ele);
-       (s)[++(*top)]=ele;
+       q[++(*rear)]=ele;
+       (*cnt)++;
     }
 }
-void pop(int *s,int *top)
+void delete(int *q,int *front,int *cnt)
 {
-    if((*top)==-1)
+    if((*cnt)==0)
     {
-        printf("Stack is Empty\n");
+        printf("Queue is Empty\n");
         return;
     }
-    printf("Deleted Element = %d\n",s[(*top)]);
-    (*top)--;
+    printf("Deleted Element = %d\n",q[(*front)]);
+    (*front)++;
+    (*cnt)--;
 }
-void display(int *s,int top)
+void display(int *q,int front,int cnt)
 {
-    if(top==-1)
+    if(cnt==0)
     {
-        printf("Stack is Empty\n");
+        printf("Queue is Empty\n");
         return;
     }
-    int i;
-    printf("Contents of Stack are = \n");
-    for(i=top;i>=0;i--)
-       printf("%d\n",(s)[i]);
+    int i=0,j;
+    printf("Contents of Queue are = \n");
+    for(i=front,j=0;j<cnt;j++)
+       printf("%d\n",q[i++]);
 }
 int main()
 {
-    int *s;
+    int *q;
     int MAX=3;
-    int top=-1,ch;
-    MALLOC((s),sizeof(int)*MAX);
+    int rear=-1,front=0,ch,cnt=0;
+    MALLOC((q),sizeof(int)*MAX);
     for(;;)
     {
-        printf("1:Push\n2:Pop\n3:Display\n4.Exit\n");
+        printf("1:Insert\n2:Delete\n3:Diqplay\n4.Exit\n");
         printf("Enter choice: ");
         scanf("%d",&ch);
         switch(ch)
         {
-             case 1 : push(s,&top,&MAX); break;
-             case 2 : pop(s,&top); break;
-             case 3 : display(s,top); break;
+             case 1 : insert(q,&rear,&MAX,&cnt); break;
+             case 2 : delete(q,&front,&cnt); break;
+             case 3 : display(q,front,cnt); break;
              default: exit(0);
         }     
     }
