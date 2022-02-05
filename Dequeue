@@ -65,7 +65,7 @@
      int a[DQS],f=0,r=-1,ch;
      for(;;)
      {
-         printf("1.Read Insert\n2.Rear Delete\n3.Front Insert\n4.Front Delete\n5.Display\n6.Exit\nEnter the Choice = ");
+         printf("1.Rear Insert\n2.Rear Delete\n3.Front Insert\n4.Front Delete\n5.Display\n6.Exit\nEnter the Choice = ");
          scanf("%d",&ch);
          switch(ch)
          {
