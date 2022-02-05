@@ -122,7 +122,7 @@ nd *deleteatpos(nd *f)
       for(t=f;t!=0;t=t->link,cnt++);
     printf("Enter the Position = ");
     scanf("%d",&pos);
-    if(pos>cnt+1 || pos<1)
+    if(pos>cnt || pos<1)
     {
         printf("Deletion not possible!\n");
         return f;
@@ -132,7 +132,7 @@ nd *deleteatpos(nd *f)
         f=deletefront(f);
         return f;
     }
-    if(pos==cnt+1)
+    if(pos==cnt)
     {
         f=deleterear(f);
         return f;
