@@ -11,6 +11,11 @@ int main()
    int ch;
    FILE *fp;
    fp = fopen("data.txt","r");
+   if(fp==0)
+   {
+      printf("File open Unsuccessfull!");
+      exit(0);
+   }
    while(1)
    {
         printf("1: Insert\n2: Delete\n3: Display\n4: Exit\n");
