@@ -33,7 +33,7 @@
  }
  void frontinsert(int *a,int *f,int *r)
  {
-     if(*f==0 && *r==-1)
+     if(*f==0 || *r==-1)
      {
          printf("Enter element - Front Insert = ");
          ++(*r);
