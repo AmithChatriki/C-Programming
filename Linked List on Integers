@@ -83,7 +83,7 @@ nd *deleterear(nd *f)
 }
 nd *insertatpos(nd *f)
 {
-    int cnt,pos;
+    int cnt=0,pos;
     nd *t;
     if(f==0) 
       cnt=0;
