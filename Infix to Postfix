@@ -57,7 +57,7 @@ int main()
             top--;
     }
     for(;s[top]!='#';top--)
-    pf[j++]=s[top];
+        pf[j++]=s[top];
     pf[j]='\0';
     printf("The postfix expression : %s\n",pf);
     return 0;
