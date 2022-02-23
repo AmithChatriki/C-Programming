@@ -1,0 +1,118 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+   struct node *llink;
+   int d;
+   struct node *rlink;
+};
+typedef struct node nd;
+nd *insertfront(nd **r)
+{
+   nd t = (nd)malloc(sizeof(nd));
+   printf("Enter the value = ");
+   scanf("%d",&(t->d));
+   if((*r)==0)
+   {
+      (*r)=t;
+      return t;
+   }
+   (*r)->llink=t;
+   t->rlink=(*r);
+   (*r)=t;
+   return (*r);
+}
+nd *deletefront(nd **r)
+{
+   if((*r)==0)
+   {
+      printf("DLL is Empty\n");
+      return 0;
+   }
+   if((*r)->rlink==0)
+   {
+      printf("Element Deleted = %d\n",(*r)->d);
+      free((*r));
+      return 0;
+   }
+   nd *t; 
+   t = (*r);
+   printf("Element Deleted = %d\n",t->d);
+   free((*r));
+   t=t->rlink;
+   return t;
+}
+nd *insertrear(nd **r)
+{
+   nd *last;
+   nd t = (nd)malloc(sizeof(nd));
+   printf("Enter the value = ");
+   scanf("%d",&(t->d));
+   if((*r)==0)
+   {
+      (*r)=t;
+      return t;
+   }
+   for(last=(*r);last->rlink!=0;last=last->rlink);
+   last->rlink = t;
+   t->rlink=0;
+   return (*r);
+}
+nd *deleterear(nd **r)
+{
+   if((*r)==0)
+   {
+      printf("DLL is Empty\n");
+      return 0;
+   }
+   if((*r)->rlink==0)
+   {
+      printf("Element Deleted = %d\n",(*r)->d);
+      free((*r));
+      return 0;
+   }
+   nd *p,*c;
+   for(p=0,c=(*r);c->rlink!=0;p=c,c=c->rlink);
+   printf("Element Deleted = %d\n",c->d);
+   p->rlink=0;
+   free(c);
+   return (*r);
+}
+void display(nd *r)
+{
+   if((r)==0)
+   {
+      printf("DLL is Empty\n");
+      return;
+   }
+   printf("Contents of DLL are = \n");
+   for(;(r)!=0;(r)=(r)->rlink)
+      printf("%d\n",(r)->d);
+}
+int main()
+{
+   nd *front=0;
+   int ch;
+   for(;;)
+   {
+      printf("1.Insert Front\n2.Delete Front\n3.Insert Rear\n4.Delete Rear\n5.Display\n6.Exit\nEnter the Choice = ");
+      scanf("%d",&ch);
+      switch(ch)
+      {
+          case 1  : front = insertfront(&front);
+                    break;
+          case 2  : front = deletefront(&front);
+                    break;
+          case 3  : front = insertrear(&front);
+                    break;
+          case 4  : front = deleterear(&front);
+                    break;
+          case 5  : display(front);
+                    break;
+          case 6  : exit(0);
+          default : printf("Invaid Choice!\n");
+                    break;
+      }
+   }
+   return 0;
+}
