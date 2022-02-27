@@ -40,7 +40,6 @@ void insert(int *p,int *n)
      p[pos-1]= ele;
      (*n)++;
 }
-
 void delete(int *p,int *n)
 {
      if((*n)==0)
