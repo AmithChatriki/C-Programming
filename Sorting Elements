@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct element
+{
+   int key;
+};
+typedef struct element ele;
+
+void insert(ele e,ele *a,int i)
+{
+   a[0]=e;
+   while(e.key < a[i].key)
+   {
+      a[i+1]=a[i];
+      i--;
+   }
+   a[i+1]=e;
+}
+
+void insertionsort(ele *a,int n)
+{
+   int j;
+   ele temp;
+   for(j=2;j<=n;j++)
+   {
+      temp=a[j];
+      insert(temp,a,j-1);
+   }
+}
+
+int main()
+{
+   ele a[20];
+   int i,n;
+   
+   FILE *fp;
+   fp = fopen("SORT","r");
+   fscanf(fp,"%d",&n);
+   
+   for(i=1;i<=n;i++)
+      fscanf(fp,"%d",&(a[i].key));
+   
+   insertionsort(a,n);
+   
+   for(i=1;i<=n;i++)
+       printf("%d\n",a[i].key);
+}
+/*
+SORT
+10
+2 4 6 3 1 5 7 9 8 10
+*/
