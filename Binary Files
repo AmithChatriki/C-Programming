@@ -1,0 +1,34 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct employee
+{
+   char eid[20];
+   char ename[20];
+   float sal;
+};
+typedef struct employee E;
+int main()
+{
+   int n,i,rn;
+   scanf("%d",&n);
+   E *p=0;
+   p = (E*)realloc(0,sizeof(E)*n);
+   if(p==0)
+   {
+      printf("Unsucessfull DMA\n");
+      return 1;
+   }
+   for(i=0;i<n;i++)
+     scanf("%s%s%f",(p+i)->eid,(p+i)->ename,&((p+i)->sal));
+   FILE *fp;
+   fp=fopen("data","w+");
+   fwrite(p,sizeof(E),n,fp);
+   rewind(fp);
+   printf("Enter the record number to be Retrived = ");
+   scanf("%d",&rn);
+   E temp;
+   fseek(fp,sizeof(E)*(rn-1),SEEK_CUR);
+   fread(&temp,sizeof(E),1,fp);
+   printf("%s %s %.2f\n",(temp.eid),(temp.ename),(temp.sal));
+   return 0;
+}
