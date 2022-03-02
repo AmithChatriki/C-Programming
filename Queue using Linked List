@@ -1,0 +1,96 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX 3
+#define MALLOC(p,s)\
+        if(!(p=malloc(s)))\
+        {\
+           printf("Unsuccessfull Malloc\n");\
+           exit(0);\
+        }
+struct queue
+{
+   int data;
+   struct queue *link;
+};
+typedef struct queue Q;
+Q *insert(Q *f,int *count)
+{
+   if((*count)==MAX)
+   {
+      printf("Queue Overfow\n");
+      return f;
+   }
+   Q *t;
+   MALLOC(t,sizeof(Q));
+   printf("Enter the Element = ");
+   scanf("%d",&(t->data));
+   t->link=0;
+   if(f==0)
+   {
+      (*count)++;
+      return t;
+   }
+   Q *last;
+   MALLOC(last,sizeof(Q));
+   for(last=f;last->link!=0;last=last->link);
+   last->link=t;
+   (*count)++;
+   return f;
+}
+Q *delete(Q *f,int *count)
+{
+   if(f==0)
+   {
+      printf("Queue Underflow\n");
+      return f;
+   }
+   if(f->link==0)
+   {
+      printf("Element Deleted = %d\n",f->data);
+      free(f);
+      (*count)--;
+      return 0;
+   }
+   Q *t;
+   MALLOC(t,sizeof(Q));
+   t=f->link;
+   printf("Element Deleted = %d\n",f->data);
+   free(f);
+   (*count)--;
+   return t;
+}
+void display(Q *f)
+{
+   if(f==0)
+   {
+      printf("Queue is Empty\n");
+      return;
+   }
+   printf("Queue Contents = \n");
+   for(;f!=0;f=f->link)
+      printf("%d\n",f->data);
+}
+int main()
+{
+   Q *first=0;
+   int ch,count=0;
+   for(;;)
+   {
+       printf("1.Insert\n2.Delete\n3.Display\n4.Exit\n");
+       printf("Enter the Choice = ");
+       scanf("%d",&ch);
+       switch(ch)
+       {
+          case 1 : first = insert(first,&count);
+                   break;
+          case 2 : first = delete(first,&count);
+                   break;
+          case 3 : display(first);
+                   break;
+          case 4 : exit(0);
+          default: printf("Invalid Choice!\n");
+                   break;
+       }
+   }
+   return 0;
+}
