@@ -1,0 +1,59 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+char T[100],P[100],REP[100],FIN[100];
+
+void read()
+{
+   printf("Enter the Main string = ");
+   scanf("%s",T);
+   printf("Enter the Pattern string = ");
+   scanf("%s",P);
+   printf("Enter the Replacement string = ");
+   scanf("%s",REP);
+}
+
+int slen(char *s)
+{
+   int len=0;
+   for(;s[len]!='\0';len++);
+   return len;
+}
+
+void replace()
+{
+   int k,s,r,l,q,z;
+   k=q=0;
+   s=slen(T);
+   r=slen(P);
+   
+   const int MAX=s-r+1;
+   
+   for(;k<=MAX;)
+   {
+       for(l=0;l<r;l++)
+          if(P[l]!=T[k+l])
+             break;
+       if(l==r)
+       {
+           printf("Pattern Found at %d\n",k);
+           for(z=0;z<slen(REP);z++)
+              FIN[q++]=REP[z];
+              k=k+r;
+       }
+       else
+           FIN[q++]=T[k++];
+   }
+   FIN[q]='\0';
+}
+
+int main()
+{
+   read();
+   replace();
+   
+   printf("Final String = %s\n",FIN);
+   
+   return 0;
+}
