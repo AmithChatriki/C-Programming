@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{
+	char s[100]={"a"};
+	int n=10000000;
+	long lastRoundLen = n%strlen(s);
+    long round = n/strlen(s);
+    long countA = 0;
+    long totalA = 0;
+    for(int i = 0 ; i < strlen(s);i++){
+         if(s[i] == 'a'){
+              countA ++;
+         }
+     }
+     totalA = round*countA;
+     for(int i = 0 ; i < lastRoundLen;i++){
+          if(s[i] == 'a'){
+              totalA ++;
+          }
+     }
+     printf("%ld",totalA);
+	return 0;
+}
