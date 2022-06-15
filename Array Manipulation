@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{
+	int **q,m,n;
+	
+	scanf("%d",&n);
+	int a[10000]={0};
+	scanf("%d",&m);
+	q = (int**)malloc(m*sizeof(int*));
+	
+	for(int i=0;i<=m;i++)
+		q[i]=(int*)malloc(3*sizeof(int));
+	
+	for(int i=1;i<=m;i++)
+		for(int j=1;j<=3;j++)
+			scanf("%d",&q[i][j]);
+	
+	
+	for(int i=1;i<=m;i++)
+	{
+		int k=q[i][3],l=q[i][1],x=q[i][2]-q[i][1]+1;
+		while(x--)
+			a[l++]+=k;
+	}
+	
+	for(int i=0;i<n;i++)
+		printf("%d ",a[i]);
+	
+	return 0;
+}
